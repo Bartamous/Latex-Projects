@@ -1,5 +1,6 @@
 This work is under
-<img alt="CC BY 4.0" aria-hidden="true" src="https://s3-eu-west-1.amazonaws.com/staticfigassets/images/CC-BY.png">
+
+<img alt="CC BY-SA 4.0" aria-hidden="true" src="https://lainterseccion.net/content/uploads/2021/12/CC-BY-SA_icon_white.svg_.png">
 
  You are free to:
 
