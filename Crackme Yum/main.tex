@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref}
+\usepackage{minted}
+
+\title{Crackme Yum}
+\author{\href{https://github.com/Bartamous}{Bartam0us}}
+\date{December 2024}
+
+\begin{document}
+
+\maketitle
+
+In this \href{https://crackmes.one/crackme/6754620160fa67152406b53c}{crackme} I opened the binary in binary ninja and searched for the string "Welcome mate", after doing so I found this function
+
+\begin{minted}[linenos]{c}
+00256aa3    int64_t sub_256aa3()
+
+00256aac        void* fsbase
+00256aac        int64_t rax = *(fsbase + 0x28)
+00256ae1        sub_2f2320(sub_2f3ae0(&data_3f0ba0, "Welcome mate, enter the password…"), sub_2f3390, sub_2f3390)
+00256aed        void var_68
+00256aed        sub_306ec0(&var_68)
+00256b03        sub_26a200(&data_3f0cc0, &var_68)
+00256b0f        void var_48
+00256b0f        sub_2567e5(&var_48)
+00256b22        char rax_2 = sub_256e30(&var_68, &var_48)
+00256b30        sub_307130(&var_48)
+00256b30        
+00256b37        if (rax_2 = 0)
+00256b8c            sub_2f2320(sub_2f3ae0(&data_3f0ba0, "try again"), sub_2f3390, sub_2f3390)
+00256b37        else
+00256b5f            sub_2f2320(sub_2f3ae0(&data_3f0ba0, "Success!"), sub_2f3390, sub_2f3390)
+00256b5f        
+00256b98        sub_307130(&var_68)
+00256ba6        *(fsbase + 0x28)
+00256ba6        
+00256baf        if (rax == *(fsbase + 0x28))
+00256beb            return 0
+00256beb        
+00256be1        sub_3ca720()
+00256be1        noreturn
+
+\end{minted}
+\newpage
+On line 14 you can see that rax\_2 checks that if its value = 0, if the value is zero it fails the password check, but if the value is anything else but zero it will succeed, so by simply inverting the if branch on line 14 we can make any value give us access to the system beside the value of zero.
+\begin{minted}[linenos]{c}
+00256b37        if (rax_2 != 0)
+\end{minted}
+Now if we run the program, entering any password will give us access to the program.
+\end{document}
